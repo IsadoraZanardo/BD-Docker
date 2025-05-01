@@ -68,7 +68,12 @@
     
 
 ## EXERCÍCIO 9 - Exibir o nome e email de todas as pessoas físicas que possuem mais de um email cadastrado
-    
+    SELECT nome, count(email) AS qtdEmail
+    FROM pessoa_fisica 
+    INNER JOIN cliente ON pessoa_fisica.id = cliente.id
+    INNER JOIN email ON email.cliente_id = cliente.id
+    GROUP BY nome
+    HAVING count(email) > 1;
 
 ## EXERCÍCIO 10 - Listar todos os clientes (PF e PJ) que não possuem nenhum telefone cadastrado
     SELECT c.*
