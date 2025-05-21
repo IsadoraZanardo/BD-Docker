@@ -75,6 +75,7 @@
     GROUP BY nome
     HAVING count(email) > 1;
 
+
 ## EXERCÍCIO 10 - Listar todos os clientes (PF e PJ) que não possuem nenhum telefone cadastrado
     SELECT c.*
     FROM cliente c
@@ -83,19 +84,31 @@
 
 
 ## EXERCÍCIO 11 - Listar o nome (PF ou PJ) de todos os clientes que possuem pelo menos dois telefones e pelo menos um email
- 
- 
+    SELECT c.id,
+    COALESCE(pf.nome, pj.nome_fantasia) AS nome_cliente,
+    COUNT(DISTINCT t.id) AS Qtstelefones,
+    COUNT(DISTINCT e.id) AS Qtdsemails
+    FROM cliente c
+    LEFT JOIN pessoa_fisica pf ON pf.id = c.id
+    LEFT JOIN pessoa_juridica pj ON pj.id = c.id
+    LEFT JOIN telefone t ON t.cliente_id = c.id
+    LEFT JOIN email e ON e.cliente_id = c.id
+    GROUP BY c.id, nome_cliente
+    HAVING COUNT(DISTINCT t.id) >= 2 AND COUNT(DISTINCT e.id) >= 1;
+
 
 ## EXERCÍCIO 12 - Listar os nomes e cidades dos clientes (PF ou PJ) que têm endereços tanto residenciais quanto comerciais
-    
+
 
 
 ## EXERCÍCIO 13 - Listar todos os clientes (PF e PJ) com todos os seus contatos (email, telefone e endereço), mesmo que alguns desses dados estejam ausentes
    
 
 
+
 ## EXERCÍCIO 14 - Exibir a quantidade total de clientes ativos e inativos, separando por tipo (PF e PJ)
     
+
 
 ## EXERCÍCIO 15 - Para cada cliente, exibir:
 ## tipo (PF ou PJ),
